@@ -21,8 +21,4 @@ class Users {
     // }
 }
 
-let p = new Users()
-p.createNewUser("fsdf", "xd").then((result)=>{
-    console.log(result)
-})
 module.exports = Users
