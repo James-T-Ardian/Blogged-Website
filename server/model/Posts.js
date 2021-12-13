@@ -17,7 +17,7 @@ class Posts {
         return result
     }
 
-    insertUserPost = async (title, body, created_at)=>{
+    createNewUserPost = async (title, body, created_at)=>{
         const sql = 'INSERT INTO posts(title, body, created_at, uploader) VALUES (?, ?, ?, ?)'
         const [result, _] = await mysql.execute(sql, [title, body, created_at, this.username])
         return result
