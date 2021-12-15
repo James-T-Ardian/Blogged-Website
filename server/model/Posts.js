@@ -35,14 +35,12 @@ class Posts {
         return result
     }
 
-    // VERY DANGEROUS CODE, UNCOMMENT ONLY WHEN ACTUALLY USED
-    // deleteAllUserPosts = async()=>{
-    //     const sql = 'DELETE FROM posts WHERE uploader = ?'
-    //     const [result, _]  = await mysql.execute(sql, [this.username])
-    //     return result
-    // }
+    deleteAllUserPosts = async()=>{
+        const sql = 'DELETE FROM posts WHERE uploader = ?'
+        const [result, _]  = await mysql.execute(sql, [this.username])
+        return result
+    }
 }
-
 
 module.exports = Posts
 
