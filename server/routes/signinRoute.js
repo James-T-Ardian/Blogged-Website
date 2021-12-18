@@ -2,9 +2,11 @@ const express = require('express')
 
 const router = express.Router()
 
-const controller = require('../controller/signinController')
+const controller = require('../controller/signInController')
 
-router.post('/', controller.loginUser)
+router.get('/', controller.checkIfLoggedIn)
+
+router.post('/', controller.logInUser)
 
 module.exports = router
 

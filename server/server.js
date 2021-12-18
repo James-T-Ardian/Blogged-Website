@@ -1,12 +1,35 @@
 require('dotenv').config()
 
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const express = require('express')
+const expressSession = require('express-session')
 const app = express()
 
-const signinRoute = require('./routes/signinRoute')
-const signupRoute = require('./routes/singupRoute')
+const signinRoute = require('./routes/signInRoute')
+const signupRoute = require('./routes/singUpRoute')
+const signoutRoute = require('./routes/signOutRoute')
+const blogPostsRoute = require('./routes/blogPostsRoute')
+const res = require('express/lib/response')
 
 app.use(express.json())
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}))
+app.use(cookieParser())
+app.use(express.urlencoded({extended: true}))
+app.use(expressSession({
+    key: "username",
+    secret: "doesnt actually matter",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        // 1 Hour
+        expires: 3600000 
+    }
+}))
 
 app.get('/', (req, res)=>{
     res.redirect('/signin')
@@ -16,8 +39,13 @@ app.use('/signin', signinRoute)
 
 app.use('/signup', signupRoute)
 
-// NEED TO IMPLEMENT THIS NEXT
-//app.use(':user', userRoute)
+app.use('/signout', signoutRoute)
+
+app.use('/blog', blogPostsRoute)
+
+app.get('*', (req, res)=>{
+    res.status(404).json({msg: "Page not found"})
+})
 
 
 const PORT = process.env.PORT || 3000

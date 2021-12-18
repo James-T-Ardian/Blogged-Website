@@ -6,7 +6,7 @@ class Posts {
     }
 
     getAllUserPostsTitleAndTime = async ()=>{
-        const sql = 'SELECT title, created_at FROM posts WHERE uploader = ? ORDER BY created_at'
+        const sql = 'SELECT title, created_at FROM posts WHERE uploader = ? ORDER BY created_at DESC'
         const [result, _] = await mysql.execute(sql, [this.username])
         return result
     }
