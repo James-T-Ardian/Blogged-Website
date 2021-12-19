@@ -12,7 +12,7 @@ class Posts {
     }
 
     getUserPostByPostID = async (postID)=>{
-        const sql = 'SELECT * FROM posts WHERE post_id = ? && uploader = ?'
+        const sql = 'SELECT title, body, created_at FROM posts WHERE post_id = ? && uploader = ?'
         const [result, _] = await mysql.execute(sql, [postID, this.username])
         return result
     }
@@ -42,5 +42,7 @@ class Posts {
     }
 }
 
+// let postModel = new Posts("xd")
+// postModel.getAllUserPostsTitleAndTime().then((result)=>{console.log(result)}).catch((err)=>{console.log(err)})
 module.exports = Posts
 

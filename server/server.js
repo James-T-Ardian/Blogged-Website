@@ -1,17 +1,20 @@
 require('dotenv').config()
 
+// Middleware initialization
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const express = require('express')
 const expressSession = require('express-session')
 const app = express()
 
+// Route initialization
 const signinRoute = require('./routes/signInRoute')
 const signupRoute = require('./routes/singUpRoute')
 const signoutRoute = require('./routes/signOutRoute')
 const blogPostsRoute = require('./routes/blogPostsRoute')
 const res = require('express/lib/response')
 
+// Middlewares used
 app.use(express.json())
 app.use(cors({
     origin: ["http://localhost:3000"],
@@ -31,6 +34,7 @@ app.use(expressSession({
     }
 }))
 
+// Routes used
 app.get('/', (req, res)=>{
     res.redirect('/signin')
 })
@@ -44,10 +48,11 @@ app.use('/signout', signoutRoute)
 app.use('/blog', blogPostsRoute)
 
 app.get('*', (req, res)=>{
-    res.status(404).json({msg: "Page not found"})
+    res.status(404).json({msg: "Resource not found"})
 })
 
 
+// Port
 const PORT = process.env.PORT || 3000
 app.listen(PORT, ()=>{
     console.log(`Server is listening on port ${PORT}`)

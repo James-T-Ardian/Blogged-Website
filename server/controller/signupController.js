@@ -7,6 +7,12 @@ module.exports = {
         const {username, password} = req.body
         const userModel = new Users()
 
+        // Check if username and password input is not null
+        if(username == null || password == null){
+            return res.status(400).json({signedUp: false, msg: "Username and/or password cannot be null"})
+        }
+
+        // Password stored in database will be encrypted first 
         bcrypt.hash(password, saltRounds, (error, hash)=>{
             if(error){
                 return res.status(500).json({signedUp: false, msg: "Server error"})
