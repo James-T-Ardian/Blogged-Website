@@ -12,12 +12,11 @@ const signinRoute = require('./routes/signInRoute')
 const signupRoute = require('./routes/singUpRoute')
 const signoutRoute = require('./routes/signOutRoute')
 const blogPostsRoute = require('./routes/blogPostsRoute')
-const res = require('express/lib/response')
 
 // Middlewares used
 app.use(express.json())
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: "http://localhost:3006",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }))

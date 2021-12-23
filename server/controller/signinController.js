@@ -5,7 +5,7 @@ module.exports = {
   checkIfLoggedIn: (req, res)=>{
     // Checks if there is already a cookie
     if(req.session.user){
-      return res.status(200).json({loggedIn: true, username: req.session.user, msg: "User already logged in"})
+      return res.status(200).json({loggedIn: true, username: req.session.user, msg: "User has already logged in"})
     } else {
       return res.status(401).json({loggedIn: false, username: "" ,msg: "User has not logged in"})
     }
