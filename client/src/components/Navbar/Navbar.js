@@ -3,9 +3,9 @@ import "./Navbar.css"
 
 const Navbar = () => {
     return (
-        <div className="navbar">
+        <div id="navbar">
             <ul>
-                <li className="logo">Blogged</li>
+                <li id="web-logo">Blogged</li>
             </ul>
         </div>
     )

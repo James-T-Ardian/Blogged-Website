@@ -29,9 +29,11 @@
 #sign-in-button{
     padding: 5px 98px;
     font-size:1em;
+
 }
 
-.server-message{
+
+.web-message{
     min-height:1.3em;
 }
 

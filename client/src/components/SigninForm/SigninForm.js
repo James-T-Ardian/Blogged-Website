@@ -7,7 +7,7 @@ const axios  = require('axios')
 const SigninForm = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [serverMessage, setServerMessage] = useState("")
+    const [webMessage, setWebMessage] = useState("")
     const navigate = useNavigate()
 
     axios.defaults.withCredentials = true
@@ -29,7 +29,7 @@ const SigninForm = () => {
             navigate(`/blog/${response.data.username}`)
           })
           .catch(function (error) {
-            setServerMessage(error.response.data.msg)
+            setWebMessage(error.response.data.msg)
           });
     }
 
@@ -40,8 +40,9 @@ const SigninForm = () => {
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
-            setServerMessage(response.data.msg) // <= USE THIS IN PRODUCTION
+            setWebMessage(response.data.msg) // <= USE THIS IN PRODUCTION
             //navigate(`/blog/${response.data.username}`) <= USE THIS IN DEPLOYMENT
+            console.log(response)
           })
           .catch(function (error) {
             console.log(error)
@@ -56,7 +57,7 @@ const SigninForm = () => {
                 <input className="authentication-input-bar" type="text" value={password} onChange={handlePasswordChange} placeholder="Password"></input>
                 <button className="authentication-enter-button" onClick={handleEnterClick} disabled={username.length == 0 || password.length == 0}>Enter</button>
                 <button id="create-account-button" onClick={handleCreateAccountClick}>Create Account</button>
-                <div className="server-message">{serverMessage}</div>
+                <div className="web-message">{webMessage}</div>
             </div>
         </div>
     );

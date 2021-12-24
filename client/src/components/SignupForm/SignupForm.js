@@ -8,7 +8,7 @@ const SignupForm = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordCheck, setPasswordCheck] = useState("")
-    const [serverMessage, setServerMessage] = useState("")
+    const [webMessage, setWebMessage] = useState("")
     const navigate = useNavigate()
 
     axios.defaults.withCredentials = true
@@ -26,16 +26,21 @@ const SignupForm = () => {
     }
 
     const handleEnterClick = () => {
-        axios.post('http://localhost:3000/signup', {
-            username: username,
-            password: password
-          })
-          .then(function (response) {
-            setServerMessage(response.data.msg)
-          })
-          .catch(function (error) {
-            setServerMessage(error.response.data.msg)
-          });
+        if(password !== passwordCheck){
+            setWebMessage("Passwords do not match")
+        } else {
+            axios.post('http://localhost:3000/signup', {
+                username: username,
+                password: password
+            })
+            .then(function (response) {
+                setWebMessage(response.data.msg)
+            })
+            .catch(function (error) {
+                setWebMessage(error.response.data.msg)
+            });
+        }
+        
     }
 
     const handleSignInClick = () =>{
@@ -45,8 +50,9 @@ const SignupForm = () => {
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
-            setServerMessage(response.data.msg) // <= USE THIS IN PRODUCTION
+            setWebMessage(response.data.msg) // <= USE THIS IN PRODUCTION
             //navigate(`/blog/${response.data.username}`) <= USE THIS IN DEPLOYMENT
+            console.log(response)
           })
           .catch(function (error) {
             console.log(error)
@@ -60,9 +66,9 @@ const SignupForm = () => {
                 <input className="authentication-input-bar" type="text" value={username} onChange={handleUsernameChange} placeholder="Username"></input>
                 <input className="authentication-input-bar" type="text" value={password} onChange={handlePasswordChange} placeholder="Password"></input>
                 <input className="authentication-input-bar" type="text" value={passwordCheck} onChange={handlePasswordCheckChange} placeholder="Re-enter Password"></input>
-                <button className="authentication-enter-button" onClick={handleEnterClick} disabled={username.length == 0 || password.length == 0 || password !== passwordCheck}>Enter</button>
+                <button className="authentication-enter-button" onClick={handleEnterClick} disabled={username.length == 0 || password.length == 0}>Enter</button>
                 <button id="sign-in-button" onClick={handleSignInClick}>Log In Account</button>
-                <div className="server-message">{serverMessage}</div>
+                <div className="web-message">{webMessage}</div>
             </div>
         </div>
     );

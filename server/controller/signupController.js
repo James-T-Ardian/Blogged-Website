@@ -12,6 +12,10 @@ module.exports = {
             return res.status(400).json({signedUp: false, msg: "Username and/or password cannot be null"})
         }
 
+        if(username.length > 15 || password.length > 15){
+            return res.status(400).json({signedUp: false, msg: "Username and/or password cannot exceed 15 characters"})
+        }
+
         // Password stored in database will be encrypted first 
         bcrypt.hash(password, saltRounds, (error, hash)=>{
             if(error){
