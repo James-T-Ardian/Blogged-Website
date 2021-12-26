@@ -40,8 +40,7 @@ const SigninForm = () => {
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
-            setWebMessage(response.data.msg) // <= USE THIS IN PRODUCTION
-            //navigate(`/blog/${response.data.username}`) <= USE THIS IN DEPLOYMENT
+            navigate(`/blog/${response.data.username}`) 
             console.log(response)
           })
           .catch(function (error) {

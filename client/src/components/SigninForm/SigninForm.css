@@ -24,12 +24,28 @@
 .authentication-enter-button{
     padding: 5px 166px;
     font-size:1em;
+    background-color: black;
+    color:white;
+}
+
+.authentication-enter-button:hover{
+    opacity: 0.7;
+}
+
+.authentication-enter-button:disabled{
+    opacity: 0.3;
 }
 
 
 #create-account-button{
     padding: 5px 95px;
     font-size:1em;
+    background-color: black;
+    color:white;
+}
+
+#create-account-button:hover{
+    opacity: 0.7;
 }
 
 
