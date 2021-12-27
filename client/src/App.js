@@ -5,18 +5,27 @@ import Navbar from './components/Navbar/Navbar'
 import UserBlog from './components/UserBlog/UserBlog'
 import SignupForm from './components/SignupForm/SignupForm'
 import Footer from './components/Footer/Footer'
-
+import SinglePost from './components/SinglePost/SinglePost'
 import "./App.css"
+
 function App() {
   return (
     <Router>
       <Navbar/>
 
       <Routes>
+        <Route path ="/" element={<Navigate to="/signin"/>}></Route>
         <Route path = "/signin" element= {<SigninForm/>}></Route>
         <Route path = "/signup" element= {<SignupForm/>}></Route>
+
         <Route path = "/blog/:username" element={<UserBlog/>}></Route>
-        <Route path ="/" element={<Navigate to="/signin"/>}></Route>
+
+        {/* For seeing and editing posts */}
+        <Route path = "/blog/:username/:postId/:purpose" element={<SinglePost/>}></Route>
+        {/* For creating posts */}
+        <Route path = "/blog/:username/:purpose" element={<SinglePost/>}></Route>
+
+        
       </Routes>
 
       <Footer/>

@@ -29,7 +29,7 @@ app.use(expressSession({
     saveUninitialized: false,
     cookie: {
         // 1 Hour
-        expires: 3600000 
+        expires: 3600000
     }
 }))
 

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams, useNavigate, Link} from 'react-router-dom'
 import './UserBlog.css'
 
 const axios  = require('axios')
@@ -7,21 +7,40 @@ const axios  = require('axios')
 const UserBlog = () => {
     const {username} = useParams()
     const navigate = useNavigate()
-    const [posts, changePosts] = useState([])
-    const [isOwner, changeIsOwner] = useState(false)
+    const [posts, setPosts] = useState([])
+    const [isOwner, setIsOwner] = useState(false)
 
     axios.defaults.withCredentials = true
-
+    
     const loadPosts = ()=>{
         axios.get(`http://localhost:3000/blog/${username}`)
         .then(function(response) {
-            changePosts(response.data.posts)
-            changeIsOwner(response.data.isOwner)
+            setPosts(response.data.posts)
+            setIsOwner(response.data.isOwner)
             console.log(response)
         })
         .catch(function(error) {
             console.log(error)
         })
+    }
+
+    const handleEditClick = (postId)=>{
+        return function (e) {
+            navigate(`/blog/${username}/${postId}/edit`)
+        }
+    }
+
+    const handleDeleteClick = (postId)=>{
+        return function (e) {
+            axios.delete(`http://localhost:3000/blog/${username}/${postId}`)
+            .then(function (response){
+                loadPosts()
+                console.log(response)
+            })
+            .catch(function (error){
+                console.log(error)
+            })
+        }
     }
 
     useEffect(()=>{
@@ -34,17 +53,29 @@ const UserBlog = () => {
             navigate(`/signin`) 
             console.log(error)
         });
-    }, [])
+    }, [posts])
 
     return (
         <div id="blog-container">
             <div id="user-identifier">{username}'s posts</div>
             <div id="posts-container">
                 {posts.map((post) => {
-                    return (<div className="post-title-time">
+                    return (
+                        <div className='post-with-buttons-container'>
+                            <Link className="post-title-time" to={`/blog/${username}/${post.post_id}/see`} >
                                 <div className="post-title">{post.title}</div>
                                 <div className="post-time">Posted on: {post.created_at.slice(0,10)}</div>
-                            </div>)
+                            </Link>
+
+                            {isOwner ? 
+                                <div className="edit-delete-buttons-container">
+                                    <button  onClick={handleEditClick(post.post_id)}>Edit</button>
+                                    <button  onClick={handleDeleteClick(post.post_id)}>Delete</button>
+                                </div>
+                                : null 
+                            }
+                        </div>
+                    )
                 })}
             </div>
         </div>

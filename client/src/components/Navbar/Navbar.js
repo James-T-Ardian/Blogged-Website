@@ -33,8 +33,12 @@ const Navbar = () => {
             console.log(response)
         })
         .catch(function (error) {
+            setUsername(error.response.data.username)
+            setIsLoggedIn(error.response.data.loggedIn)
             console.log(error)
         });
+
+
     }, [url])
 
     return (

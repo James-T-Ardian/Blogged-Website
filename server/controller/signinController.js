@@ -37,7 +37,7 @@ module.exports = {
             // Create cookie
             req.session.user = username
 
-            return res.status(200).json({v: true, username: req.session.user, msg: "User has logged in successfully"})
+            return res.status(200).json({loggedIn: true, username: req.session.user, msg: "User has logged in successfully"})
           } else {
             return res.status(401).json({loggedIn: false, username: "" , msg: "Username and/or password is incorrect"})
           }
