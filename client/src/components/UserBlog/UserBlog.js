@@ -10,6 +10,8 @@ const UserBlog = () => {
     const [posts, setPosts] = useState([])
     const [isOwner, setIsOwner] = useState(false)
 
+    const url = window.location.pathname.split('/').pop();
+
     axios.defaults.withCredentials = true
     
     const loadPosts = ()=>{
@@ -43,6 +45,10 @@ const UserBlog = () => {
         }
     }
 
+    const handleCreatePostClick = ()=>{
+        navigate(`/blog/${username}/create`)
+    }
+
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
@@ -53,11 +59,12 @@ const UserBlog = () => {
             navigate(`/signin`) 
             console.log(error)
         });
-    }, [posts])
+    }, [url])
 
     return (
         <div id="blog-container">
             <div id="user-identifier">{username}'s posts</div>
+            {isOwner ? <button id="add-post-button" onClick={handleCreatePostClick}>Add Post</button>: null}
             <div id="posts-container">
                 {posts.map((post) => {
                     return (

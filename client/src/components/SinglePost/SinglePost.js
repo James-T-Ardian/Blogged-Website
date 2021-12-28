@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom'
+import './SinglePost.css'
 
 const axios = require("axios")
 
@@ -8,7 +9,9 @@ const SinglePost = () => {
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
     const [isOwner, setIsOwner] = useState(false)
+
     const navigate = useNavigate()
+    const todayDate = new Date().toISOString().slice(0, 10);
 
     axios.defaults.withCredentials = true
 
@@ -35,10 +38,25 @@ const SinglePost = () => {
             body: body
         })
         .then(function (response){
-            loadPostContents()
+            navigate(`/blog/${username}`)
             console.log(response)
         })
         .catch(function(error){
+            console.log(error)
+        })
+    }
+
+    const handleCreatePostButton = ()=>{
+        axios.post(`http://localhost:3000/blog/${username}`, {
+            title: title,
+            body: body,
+            created_at: todayDate
+        })
+        .then((response)=>{
+            navigate(`/blog/${username}`)
+            console.log(response)
+        })
+        .catch((error)=>{
             console.log(error)
         })
     }
@@ -55,7 +73,7 @@ const SinglePost = () => {
         .then(function (response) {
             if(purpose == "see" || purpose == "edit"){
                 loadPostContents()
-            }
+            } 
             console.log(response)
         })
         .catch(function (error) {
@@ -67,10 +85,13 @@ const SinglePost = () => {
 
     return (
         <div id="single-post-container">
-            <button id="back-button" onClick={handleBackButtonClick}>Back</button>
-            <input id="title" type="text" value={title} disabled = {purpose == "see"} onChange={handleTitleChange}></input>
-            <input id="body" type="textarea" value={body} disabled = {purpose == "see"} onChange={handleBodyChange}></input>
-            {purpose == "edit" ? <button id="submit-edit-button" onClick={handleSubmitEditButton}>Submit Edit</button>: null}
+            <input id="title" type="text" value={title} disabled = {purpose == "see"} onChange={handleTitleChange} placeholder='Title'></input>
+            <textarea id="body"  value={body} disabled = {purpose == "see"} onChange={handleBodyChange} placeholder='Text Body'></textarea>
+            <div id="back-edit-create-buttons-container">
+                <button id="back-button" onClick={handleBackButtonClick}>Back</button>
+                {purpose == "edit" ? <button id="submit-edit-button" onClick={handleSubmitEditButton}>Submit Edit</button>: null}
+                {purpose == "create" ? <button id="create-post-button" onClick={handleCreatePostButton}>Create Post</button>: null}
+            </div>
         </div>
     );
 };

@@ -1,3 +1,11 @@
+#blog-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+}
+
 #posts-container{
     display:flex;
     justify-content: center;
@@ -8,10 +16,20 @@
 
 }
 
+
 #user-identifier{
     font-size: 3em;
-    text-align: center;
     margin: 2.5em 0 1em 0;
+}
+
+#add-post-button{
+    font-size: 2em;
+    background-color: black;
+    color: white;
+}
+
+#add-post-button:hover{
+    opacity:0.7;
 }
 
 .post-with-buttons-container{
@@ -24,6 +42,7 @@
     justify-content: space-between;
     border: 3px solid black;
     width: 50vw;
+    min-width: 400px;
     text-decoration: none;
     color: black;
 }
