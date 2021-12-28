@@ -51,9 +51,13 @@
 }
 
 #user-icon{
-    width: 70px;
-    height: 70px;
+    width: 75px;
+    height: 75px;
     margin-right:-25px
+}
+
+#profile-identifier{
+    color: black;
 }
 
 #signout-button{

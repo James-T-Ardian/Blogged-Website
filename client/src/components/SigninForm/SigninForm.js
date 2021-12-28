@@ -29,7 +29,11 @@ const SigninForm = () => {
             navigate(`/blog/${response.data.username}`)
           })
           .catch(function (error) {
-            setWebMessage(error.response.data.msg)
+            if(error.response.status == "500"){
+                navigate("/500")
+            } else {
+                setWebMessage(error.response.data.msg)
+            }
           });
     }
 
@@ -41,11 +45,9 @@ const SigninForm = () => {
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
             navigate(`/blog/${response.data.username}`) 
-            console.log(response)
           })
           .catch(function (error) {
-            
-            console.log(error)
+            // No need to handle error
           });
     }, [])
 

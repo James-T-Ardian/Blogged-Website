@@ -6,6 +6,7 @@ import UserBlog from './components/UserBlog/UserBlog'
 import SignupForm from './components/SignupForm/SignupForm'
 import Footer from './components/Footer/Footer'
 import SinglePost from './components/SinglePost/SinglePost'
+import ErrorPage from './components/ErrorPage/ErrorPage'
 import "./App.css"
 
 function App() {
@@ -25,7 +26,10 @@ function App() {
         {/* For creating posts */}
         <Route path = "/blog/:username/:purpose" element={<SinglePost/>}></Route>
 
-        
+        <Route path = "/:errorNum" element={<ErrorPage/>}></Route>
+
+        <Route path = "*" element={<Navigate to="/404"/>}></Route>
+
       </Routes>
 
       <Footer/>

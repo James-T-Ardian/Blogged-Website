@@ -1,7 +1,7 @@
 import React, {useEffect, useState}  from "react"
 import "./Navbar.css"
 import userIcon from './logo-images/user_icon.png'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const axios  = require('axios')
 
@@ -19,10 +19,9 @@ const Navbar = () => {
         .then(function (response) {
             setIsLoggedIn(!response.data.loggedOut)
             navigate(`/signin`) 
-            console.log(response)
           })
           .catch(function (error) {
-            console.log(error)
+              // No need to handle any errors
           });
     }
 
@@ -39,7 +38,6 @@ const Navbar = () => {
         .then(function (response) {
             setUsername(response.data.username)
             setIsLoggedIn(response.data.loggedIn)
-            console.log(response)
         })
         .catch(function (error) {
             setUsername(error.response.data.username)
@@ -56,10 +54,10 @@ const Navbar = () => {
                 <div id="web-logo">Blogged</div>
             </div>
             { isLoggedIn ? <div id="right-side-nav">
-                <input id="user-search-bar" type="text" placeholder="Insert name of user" onChange={handleUserSearchChange}></input>
+                <input id="user-search-bar" type="text" placeholder="Insert username" onChange={handleUserSearchChange}></input>
                 <button id="user-search-button" onClick={handleUserSearchClick}>Search</button>
-                <img id="user-icon" src={userIcon}></img>
-                <div id="profile-identifier">{username}</div>
+                <Link to={`/blog/${username}`}><img id="user-icon" src={userIcon}></img></Link>
+                <Link to={`/blog/${username}`} style={{ textDecoration: 'none' }}><div id="profile-identifier">{username}</div></Link>
                 <button id="signout-button"onClick={handleSignOut}>Sign Out</button>
             </div> : null }
         </div>

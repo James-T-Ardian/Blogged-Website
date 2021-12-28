@@ -34,10 +34,14 @@ const SignupForm = () => {
                 password: password
             })
             .then(function (response) {
-                setWebMessage(response.data.msg)
+                navigate("/signin")
             })
             .catch(function (error) {
-                setWebMessage(error.response.data.msg)
+                if(error.response.status == "500"){
+                    navigate("/500")
+                } else {
+                    setWebMessage(error.response.data.msg)
+                }
             });
         }
         
@@ -51,11 +55,10 @@ const SignupForm = () => {
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
             navigate(`/blog/${response.data.username}`)
-            console.log(response)
-          })
-          .catch(function (error) {
-            console.log(error)
-          });
+        })
+        .catch(function (error) {
+            // No need to handle error
+        });
     }, [])
 
     return (

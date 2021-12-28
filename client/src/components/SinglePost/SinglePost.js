@@ -24,7 +24,11 @@ const SinglePost = () => {
             setIsOwner(response.data.isOwner)
         })
         .catch(function (error){
-            console.log(error)
+            if(error.response.status == "500"){
+                navigate("/500")
+            } else if (error.response.status == "404"){
+                navigate("/404")
+            }
         })
     }
 
@@ -39,10 +43,13 @@ const SinglePost = () => {
         })
         .then(function (response){
             navigate(`/blog/${username}`)
-            console.log(response)
         })
         .catch(function(error){
-            console.log(error)
+            if(error.response.status == "500"){
+                navigate("/500")
+            } else if(error.response.status == "401"){
+                navigate("/401")
+            }
         })
     }
 
@@ -54,10 +61,13 @@ const SinglePost = () => {
         })
         .then((response)=>{
             navigate(`/blog/${username}`)
-            console.log(response)
         })
         .catch((error)=>{
-            console.log(error)
+            if(error.response.status == "500"){
+                navigate("/500")
+            } else if(error.response.status == "401"){
+                navigate("/401")
+            }
         })
     }
     
@@ -74,11 +84,9 @@ const SinglePost = () => {
             if(purpose == "see" || purpose == "edit"){
                 loadPostContents()
             } 
-            console.log(response)
         })
         .catch(function (error) {
             navigate('/signin')
-            console.log(error)
         });
     }, [])
 

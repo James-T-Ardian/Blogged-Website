@@ -19,10 +19,13 @@ const UserBlog = () => {
         .then(function(response) {
             setPosts(response.data.posts)
             setIsOwner(response.data.isOwner)
-            console.log(response)
         })
         .catch(function(error) {
-            console.log(error)
+            if(error.response.status == "500"){
+                navigate("/500")
+            } else if (error.response.status == "404"){
+                navigate("/404")
+            }
         })
     }
 
@@ -37,10 +40,11 @@ const UserBlog = () => {
             axios.delete(`http://localhost:3000/blog/${username}/${postId}`)
             .then(function (response){
                 loadPosts()
-                console.log(response)
             })
             .catch(function (error){
-                console.log(error)
+                if(error.response.status(500)){
+                    navigate("/500")
+                }
             })
         }
     }
@@ -53,11 +57,9 @@ const UserBlog = () => {
         axios.get('http://localhost:3000/signin')
         .then(function (response) {
             loadPosts()
-            console.log(response)
         })
         .catch(function (error) {
             navigate(`/signin`) 
-            console.log(error)
         });
     }, [url])
 
