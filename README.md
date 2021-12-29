@@ -1,3 +1,5 @@
+Deployed Website: https://blogged-website.netlify.app/#
+
 Blogged-website development code<br />
 
 Client code is written using ReactJS (deployment code for client: https://github.com/James-T-Ardian/Blogged-Website-Client) <br />
