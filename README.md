@@ -1,2 +1,5 @@
-Client folder for front-end (Used: ReactJS)
-Server folder for back-end (Used: NodeJS and mySQL)
+Blogged-website development code<br />
+
+Client code is written using ReactJS (deployment code for client: https://github.com/James-T-Ardian/Blogged-Website-Client) <br />
+
+Server Code is written using NodeJS, ExpressJS and MySQL <br />
