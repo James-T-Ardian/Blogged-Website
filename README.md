@@ -4,4 +4,7 @@ Client code is written using ReactJS (deployment code for client: https://github
 
 Server Code is written using NodeJS, ExpressJS and MySQL and deployed using Heroku<br />
 
+Note: There are some changes in deployment code as compared to development code. For client code changes, see above repository's readme file. For
+server changes, I changed mysql credentials to use the mysql deployed at Heroku. 
+
 Deployed Website: https://blogged-website.netlify.app/# <br />
