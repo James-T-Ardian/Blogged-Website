@@ -42,7 +42,7 @@ module.exports = {
             return res.status(401).json({loggedIn: false, username: "" , msg: "Username and/or password is incorrect"})
           }
         })
-    }).catch((err)=>{
+    }).catch(()=>{
         return res.status(500).json({loggedIn: false, username: "" , msg: "Server error"})
     })
     
