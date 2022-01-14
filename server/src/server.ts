@@ -1,9 +1,9 @@
 require('dotenv').config()
 
 // Middleware initialization
+import express from 'express'
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const express = require('express')
 const expressSession = require('express-session')
 const app = express()
 
@@ -34,7 +34,7 @@ app.use(expressSession({
 }))
 
 // Routes used
-app.get('/', (req, res)=>{
+app.get('/', (req :any, res:any)=>{
     res.redirect('/signin')
 })
 
@@ -46,7 +46,7 @@ app.use('/signout', signoutRoute)
 
 app.use('/blog', blogPostsRoute)
 
-app.get('*', (req, res)=>{
+app.get('*', (req:any, res:any)=>{
     res.status(404).json({msg: "Resource not found"})
 })
 
