@@ -1,12 +1,12 @@
-const express = require('express')
-
-const router = express.Router()
-
-const controller = require('../controller/signInController')
-
-router.get('/', controller.checkIfLoggedIn)
-
-router.post('/', controller.logInUser)
-
-module.exports = router
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.signinRoute = void 0;
+const express_1 = __importDefault(require("express"));
+const controller = require('../controller/signInController');
+const router = express_1.default.Router();
+exports.signinRoute = router;
+router.get('/', controller.checkIfLoggedIn);
+router.post('/', controller.logInUser);

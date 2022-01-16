@@ -1,17 +1,18 @@
-require('dotenv').config()
+import dotenv from 'dotenv'
+dotenv.config()
 
 // Middleware initialization
-import express from 'express'
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const expressSession = require('express-session')
-const app = express()
+import express, {Application, Request, Response} from 'express'
+import cors from 'cors'
+import cookieParser from 'cookie-parser'
+import expressSession from 'express-session'
+const app: Application =  express()
 
 // Route initialization
-const signinRoute = require('./routes/signInRoute')
-const signupRoute = require('./routes/singUpRoute')
-const signoutRoute = require('./routes/signOutRoute')
-const blogPostsRoute = require('./routes/blogPostsRoute')
+import {signinRoute} from './routes/signInRoute'
+import {signupRoute} from './routes/signUpRoute'
+import {signoutRoute} from './routes/signOutRoute'
+import {blogPostsRoute} from './routes/blogPostsRoute'
 
 // Middlewares used
 app.use(express.json())
@@ -23,18 +24,18 @@ app.use(cors({
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
 app.use(expressSession({
-    key: "username",
     secret: "doesnt actually matter",
     resave: false,
     saveUninitialized: false,
     cookie: {
         // 1 Hour
-        expires: 3600000
+        maxAge: 3600000
     }
 }))
 
 // Routes used
-app.get('/', (req :any, res:any)=>{
+
+app.get('/', (req :Request, res:Response)=>{
     res.redirect('/signin')
 })
 
@@ -46,13 +47,13 @@ app.use('/signout', signoutRoute)
 
 app.use('/blog', blogPostsRoute)
 
-app.get('*', (req:any, res:any)=>{
+app.get('*', (req:Request, res:Response)=>{
     res.status(404).json({msg: "Resource not found"})
 })
 
 
 // Port
-const PORT = process.env.PORT || 3000
+const PORT : string|3000 = process.env.PORT || 3000
 app.listen(PORT, ()=>{
     console.log(`Server is listening on port ${PORT}`)
 })
