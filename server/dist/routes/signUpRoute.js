@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signupRoute = void 0;
 const express_1 = __importDefault(require("express"));
-const controller = require('../controller/signUpController');
+const controller = require('../controller/signUpController'); // Change after migrating controller
 const router = express_1.default.Router();
 exports.signupRoute = router;
 router.post('/', controller.createNewUser);
