@@ -1,18 +1,18 @@
 import express, {Router} from 'express'
 
-const controller = require('../controller/blogPostsController') // Change after migrating controller
+import * as blogPostsController from '../controller/blogPostsController'
 
 const router:Router = express.Router()
 
-router.get('/:username', controller.getBlogPostsTitleTime)
+router.get('/:username', blogPostsController.getBlogPostsTitleTime)
 
-router.post('/:username', controller.createBlogPost)
+router.post('/:username', blogPostsController.createBlogPost)
 
-router.put('/:username/:postId', controller.updateBlogPost)
+router.put('/:username/:postId', blogPostsController.updateBlogPost)
 
-router.delete('/:username/:postId', controller.deleteBlogPost)
+router.delete('/:username/:postId', blogPostsController.deleteBlogPost)
 
-router.get('/:username/:postId', controller.getSpecificPost)
+router.get('/:username/:postId', blogPostsController.getSpecificPost)
 
 
 export {router as blogPostsRoute}

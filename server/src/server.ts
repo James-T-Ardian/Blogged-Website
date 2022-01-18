@@ -8,6 +8,8 @@ import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 const app: Application =  express()
 
+
+
 // Route initialization
 import {signinRoute} from './routes/signInRoute'
 import {signupRoute} from './routes/signUpRoute'
@@ -23,6 +25,7 @@ app.use(cors({
 }))
 app.use(cookieParser())
 app.use(express.urlencoded({extended: true}))
+
 app.use(expressSession({
     secret: "doesnt actually matter",
     resave: false,
@@ -34,7 +37,6 @@ app.use(expressSession({
 }))
 
 // Routes used
-
 app.get('/', (req :Request, res:Response)=>{
     res.redirect('/signin')
 })
