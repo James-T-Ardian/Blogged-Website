@@ -1,9 +1,10 @@
 import express, {Router} from 'express'
 
-const controller = require('../controller/signOutController') // Change after migrating controller
+import * as signOutController from '../controller/signOutController'
 
 const router:Router = express.Router()
 
-router.post('/', controller.logOutUser)
+// Routes
+router.post('/', signOutController.logOutUser)
 
 export {router as signoutRoute}

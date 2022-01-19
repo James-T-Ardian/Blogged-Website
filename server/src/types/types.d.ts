@@ -1,14 +1,14 @@
-import { RowDataPacket, OkPacket, ResultSetHeader } from "mysql2";
+import { RowDataPacket, OkPacket, ResultSetHeader } from "mysql2"
 
+// Workaround to allow certain variables to exists in all types specified under MySQLQueryCombinedTypes
 type MySQLQueryCombinedTypes = OkPacket | ResultSetHeader | RowDataPacket[] | RowDataPacket[][] | OkPacket[]
-
 export interface MySQLQueryResult extends MySQLQueryCombinedTypes {
     length?: number
     insertId?: number
     affectedRows?: number
 }
 
-
+// Interface for the Users class in model folder
 export interface UsersModel {
     async createNewUser(username: string, password: string): Promise<MySQLQueryResult>
     async getPassword(username: string): Promise<MySQLQueryResult>
@@ -16,6 +16,7 @@ export interface UsersModel {
     
 }
 
+// Interface for the Post class in model folder
 export interface PostsModel {
     username:string
     async getAllUserPostsTitleAndTime(): Promise<MySQLQueryResult>
@@ -35,7 +36,7 @@ declare module 'express-session' {
     }
 }
 
-// Declaration merging to explicitly define what type of data will exists in params and body
+// Declaration merging to explicitly define what type of data will exists in request params and request body
 declare module 'express' {
 
     export interface Request {

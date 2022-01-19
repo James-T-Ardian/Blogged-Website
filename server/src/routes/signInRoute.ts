@@ -1,12 +1,12 @@
 import express, {Router} from 'express'
 
-const controller = require('../controller/signInController') // Change after migrating controller
+import *  as signInController from '../controller/signInController'
 
 const router:Router = express.Router()
 
-router.get('/', controller.checkIfLoggedIn)
-
-router.post('/', controller.logInUser)
+// Routes
+router.get('/', signInController.checkIfLoggedIn)
+router.post('/', signInController.logInUser)
 
 export {router as signinRoute}
 

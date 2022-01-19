@@ -4,6 +4,7 @@ const controller = require('../controller/signUpController') // Change after mig
 
 const router:Router = express.Router()
 
+// Routes
 router.post('/', controller.createNewUser)
 
 export {router as signupRoute}
