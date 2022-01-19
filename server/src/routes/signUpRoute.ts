@@ -1,10 +1,10 @@
 import express, {Router}  from 'express'
 
-const controller = require('../controller/signUpController') // Change after migrating controller
+import * as  signUpController from '../controller/signUpController' 
 
 const router:Router = express.Router()
 
 // Routes
-router.post('/', controller.createNewUser)
+router.post('/', signUpController.createNewUser)
 
 export {router as signupRoute}

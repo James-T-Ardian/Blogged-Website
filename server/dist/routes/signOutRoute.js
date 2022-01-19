@@ -27,4 +27,5 @@ const express_1 = __importDefault(require("express"));
 const signOutController = __importStar(require("../controller/signOutController"));
 const router = express_1.default.Router();
 exports.signoutRoute = router;
+// Routes
 router.post('/', signOutController.logOutUser);

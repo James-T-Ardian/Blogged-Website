@@ -27,5 +27,6 @@ const express_1 = __importDefault(require("express"));
 const signInController = __importStar(require("../controller/signInController"));
 const router = express_1.default.Router();
 exports.signinRoute = router;
+// Routes
 router.get('/', signInController.checkIfLoggedIn);
 router.post('/', signInController.logInUser);
