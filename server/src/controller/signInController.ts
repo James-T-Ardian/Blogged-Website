@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt'
 import { Request, RequestHandler, Response } from 'express'
 import { MySQLQueryResult } from '../types/types'
 
+// File contains request handlers for routes/signInRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
+
 const checkIfLoggedIn: RequestHandler = (req: Request, res: Response): Response<any, Record<string, any>> | undefined =>{
   // Checks if there is already a cookie
   if(req.session.user){

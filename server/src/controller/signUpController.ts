@@ -3,6 +3,9 @@ import bcrypt from 'bcrypt'
 import { Request, RequestHandler, Response } from 'express'
 const saltRounds:number = 10
 
+// File contains request handlers for routes/signUpRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
+
 const createNewUser: RequestHandler = (req: Request, res: Response)=>{
     const {username, password} = req.body
     const userModel: Users = new Users()

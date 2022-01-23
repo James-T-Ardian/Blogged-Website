@@ -4,6 +4,9 @@ import {Posts} from '../model/Posts'
 import {Users} from '../model/Users'
 import { MySQLQueryResult } from '../types/types'
 
+// File contains request handlers for routes/blogPostsRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
+
 const getBlogPostsTitleTime: RequestHandler = (req: Request, res: Response): Response<any, Record<string, any>> | undefined => {
     const userThatOwnsPosts: string = req.params.username
     const userThatSeesPosts: SessionUser = req.session.user
