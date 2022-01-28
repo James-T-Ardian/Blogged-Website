@@ -7,6 +7,8 @@ exports.createNewUser = void 0;
 const Users_1 = require("../model/Users");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const saltRounds = 10;
+// File contains request handlers for routes/signUpRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 const createNewUser = (req, res) => {
     const { username, password } = req.body;
     const userModel = new Users_1.Users();

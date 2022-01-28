@@ -8,24 +8,6 @@ export interface MySQLQueryResult extends MySQLQueryCombinedTypes {
     affectedRows?: number
 }
 
-// Interface for the Users class in model folder
-export interface UsersModel {
-    async createNewUser(username: string, password: string): Promise<MySQLQueryResult>
-    async getPassword(username: string): Promise<MySQLQueryResult>
-    async deleteUser(username: string): Promise<MySQLQueryResult>
-    
-}
-
-// Interface for the Post class in model folder
-export interface PostsModel {
-    username:string
-    async getAllUserPostsTitleAndTime(): Promise<MySQLQueryResult>
-    async getUserPostByPostID(postID: string): Promise<MySQLQueryResult>
-    async createNewUserPost(title: string, body: string, created_at: string): Promise<MySQLQueryResult>
-    async updateUserPost(postID: string, title: string, body: string): Promise<MySQLQueryResult>
-    async deleteUserPost(postID: string): Promise<MySQLQueryResult>
-    async deleteAllUserPosts(): Promise<MySQLQueryResult>
-}
 
 // Declaration merging to explicitly define what data will exists inside each session
 declare module 'express-session' {

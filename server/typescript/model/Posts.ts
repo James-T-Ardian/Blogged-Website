@@ -1,8 +1,18 @@
 import {pool} from '../config/db'
 import {FieldPacket} from 'mysql2'
-import { MySQLQueryResult, PostsModel } from '../types/types'
+import { MySQLQueryResult} from '../types/types'
 
 const mysql = pool.promise()
+
+interface PostsModel {
+    username:string
+    getAllUserPostsTitleAndTime(): Promise<MySQLQueryResult>
+    getUserPostByPostID(postID: string): Promise<MySQLQueryResult>
+    createNewUserPost(title: string, body: string, created_at: string): Promise<MySQLQueryResult>
+    updateUserPost(postID: string, title: string, body: string): Promise<MySQLQueryResult>
+    deleteUserPost(postID: string): Promise<MySQLQueryResult>
+    deleteAllUserPosts(): Promise<MySQLQueryResult>
+}
 
 class Posts implements PostsModel{
 

@@ -27,6 +27,7 @@ const express_1 = __importDefault(require("express"));
 const blogPostsController = __importStar(require("../controller/blogPostsController"));
 const router = express_1.default.Router();
 exports.blogPostsRoute = router;
+// Routes (See: https://expressjs.com/en/guide/routing.html)
 router.get('/:username', blogPostsController.getBlogPostsTitleTime);
 router.post('/:username', blogPostsController.createBlogPost);
 router.put('/:username/:postId', blogPostsController.updateBlogPost);

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon dist/server.js",
-    "build": "tsc -p tsconfig.json"
+    "start": "nodemon src/server.js",
+    "tbuild": "tsc -p tsconfig.json"
   },
   "keywords": [],
   "author": "",

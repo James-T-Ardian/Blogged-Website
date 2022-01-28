@@ -27,5 +27,5 @@ const express_1 = __importDefault(require("express"));
 const signUpController = __importStar(require("../controller/signUpController"));
 const router = express_1.default.Router();
 exports.signupRoute = router;
-// Routes
+// Routes (See: https://expressjs.com/en/guide/routing.html)
 router.post('/', signUpController.createNewUser);

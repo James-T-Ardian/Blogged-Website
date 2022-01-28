@@ -1,8 +1,15 @@
 import {pool} from '../config/db'
 import {FieldPacket} from 'mysql2'
-import { MySQLQueryResult, UsersModel } from '../types/types'
+import { MySQLQueryResult } from '../types/types'
 
 const mysql = pool.promise()
+
+interface UsersModel {
+    createNewUser(username: string, password: string): Promise<MySQLQueryResult>
+    getPassword(username: string): Promise<MySQLQueryResult>
+    deleteUser(username: string): Promise<MySQLQueryResult>
+    
+}
 
 class Users implements UsersModel{
     // Param: username -> new user's username

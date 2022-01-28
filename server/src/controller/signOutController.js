@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logOutUser = void 0;
+// File contains request handlers for routes/signOutRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 const logOutUser = (req, res) => {
     if (req.session.user) {
         // Destroy cookie

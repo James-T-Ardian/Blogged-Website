@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.logInUser = exports.checkIfLoggedIn = void 0;
 const Users_1 = require("../model/Users");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+// File contains request handlers for routes/signInRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 const checkIfLoggedIn = (req, res) => {
     // Checks if there is already a cookie
     if (req.session.user) {

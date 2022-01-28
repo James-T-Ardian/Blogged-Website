@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSpecificPost = exports.deleteBlogPost = exports.updateBlogPost = exports.createBlogPost = exports.getBlogPostsTitleTime = void 0;
 const Posts_1 = require("../model/Posts");
 const Users_1 = require("../model/Users");
+// File contains request handlers for routes/blogPostsRoute
+// For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 const getBlogPostsTitleTime = (req, res) => {
     const userThatOwnsPosts = req.params.username;
     const userThatSeesPosts = req.session.user;
