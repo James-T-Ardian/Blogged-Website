@@ -16,8 +16,8 @@ const checkIfLoggedIn: RequestHandler = (req: Request, res: Response): Response<
 }
 
 const logInUser: RequestHandler = (req: Request, res: Response): Response<any, Record<string, any>> | undefined => {
-  const {username, password} = req.body
-  const userModel = new Users()
+  const {username, password}: {[key:string]: string} = req.body
+  const userModel: Users = new Users()
 
   // Check if username and password input is null
   if(username == null || password == null){

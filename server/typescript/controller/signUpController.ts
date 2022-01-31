@@ -6,8 +6,8 @@ const saltRounds:number = 10
 // File contains request handlers for routes/signUpRoute
 // For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 
-const createNewUser: RequestHandler = (req: Request, res: Response)=>{
-    const {username, password} = req.body
+const createNewUser: RequestHandler = (req: Request, res: Response): Response<any, Record<string, any>> | undefined =>{
+    const {username, password}: {[key:string]: string} = req.body
     const userModel: Users = new Users()
 
     // Check if username and password input is not null

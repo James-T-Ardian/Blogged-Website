@@ -3,7 +3,7 @@ import { Request, RequestHandler, Response } from "express";
 // File contains request handlers for routes/signOutRoute
 // For information about express request handlers: https://www.etutorialspoint.com/index.php/expressjs/express-js-requesthandler
 
-const logOutUser:RequestHandler = (req:Request, res:Response)=>{
+const logOutUser:RequestHandler = (req:Request, res:Response): Response<any, Record<string, any>> | undefined=>{
     if(req.session.user){
         // Destroy cookie
         req.session.destroy((err:any)=>{
