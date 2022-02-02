@@ -1,48 +1,49 @@
-import React, {useEffect, useState}  from "react"
+import {useEffect, useState}  from "react"
 import "./Navbar.css"
 import userIcon from './logo-images/user_icon.png'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, NavigateFunction } from 'react-router-dom'
 
-const axios  = require('axios')
+import axios, {AxiosError, AxiosResponse} from 'axios'
 
 const Navbar = () => {
-    const [username, setUsername] = useState("")
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [userSearch, setUserSearch] = useState("")
-    const navigate = useNavigate()
-    const url = window.location.pathname.split('/').pop();
+    const [username, setUsername] = useState<string>("")
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+    const [userSearch, setUserSearch] = useState<string>("")
+    const navigate: NavigateFunction = useNavigate()
+    const url: string = window.location.pathname.split('/').pop() as string;
 
     axios.defaults.withCredentials = true
 
-    const handleSignOut = () => {
+    const handleSignOut: React.MouseEventHandler<HTMLButtonElement> = () => {
         axios.post('http://localhost:3000/signout')
-        .then(function (response) {
+        .then(function (response: AxiosResponse<any, any>) {
             setIsLoggedIn(!response.data.loggedOut)
             navigate(`/signin`) 
           })
-          .catch(function (error) {
+          .catch(function () {
               // No need to handle any errors
           });
     }
 
-    const handleUserSearchChange = (event)=>{
+    const handleUserSearchChange: React.ChangeEventHandler<HTMLInputElement>  = (event: React.ChangeEvent<HTMLInputElement>)=>{
         setUserSearch(event.target.value)
     }
 
-    const handleUserSearchClick = ()=>{
+    const handleUserSearchClick: React.MouseEventHandler<HTMLButtonElement>= ()=>{
         navigate(`/blog/${userSearch}`)
     }
 
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response) {
+        .then(function (response: AxiosResponse) {
             setUsername(response.data.username)
             setIsLoggedIn(response.data.loggedIn)
         })
-        .catch(function (error) {
-            setUsername(error.response.data.username)
-            setIsLoggedIn(error.response.data.loggedIn)
-            console.log(error)
+        .catch(function (error: AxiosError) {
+            setUsername(error?.response?.data.username ?? "")
+            setIsLoggedIn(error?.response?.data.loggedIn ?? false)
+
+            
         });
 
 
