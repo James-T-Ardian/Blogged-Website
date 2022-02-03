@@ -1,31 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import "./SignupForm.css"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 
-const axios  = require('axios')
+import axios, { AxiosError, AxiosResponse } from 'axios'
 
 const SignupForm = () => {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
-    const [passwordCheck, setPasswordCheck] = useState("")
-    const [webMessage, setWebMessage] = useState("")
-    const navigate = useNavigate()
+    const [username, setUsername] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [passwordCheck, setPasswordCheck] = useState<string>("")
+    const [webMessage, setWebMessage] = useState<string>("")
+    const navigate: NavigateFunction = useNavigate()
 
     axios.defaults.withCredentials = true
 
-    const handleUsernameChange = (event) => {
+    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setUsername(event.target.value)
     }
 
-    const handlePasswordChange = (event) => {
+    const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         setPassword(event.target.value)
     }
 
-    const handlePasswordCheckChange = (event)=>{
+    const handlePasswordCheckChange: React.ChangeEventHandler<HTMLInputElement> = (event)=>{
         setPasswordCheck(event.target.value)
     }
 
-    const handleEnterClick = () => {
+    const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = () => {
         if(password !== passwordCheck){
             setWebMessage("Passwords do not match")
         } else {
@@ -33,30 +33,30 @@ const SignupForm = () => {
                 username: username,
                 password: password
             })
-            .then(function (response) {
+            .then(function () {
                 navigate("/signin")
             })
-            .catch(function (error) {
-                if(error.response.status == "500"){
+            .catch(function (error: AxiosError) {
+                if(error?.response?.status.toString() == "500"){
                     navigate("/500")
                 } else {
-                    setWebMessage(error.response.data.msg)
+                    setWebMessage(error?.response?.data.msg ?? "Server Error")
                 }
             });
         }
         
     }
 
-    const handleSignInClick = () =>{
+    const handleSignInClick: React.MouseEventHandler<HTMLButtonElement> = () =>{
         navigate('/signin')
     }
 
     useEffect(()=>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response) {
+        .then(function (response: AxiosResponse) {
             navigate(`/blog/${response.data.username}`)
         })
-        .catch(function (error) {
+        .catch(function () {
             // No need to handle error
         });
     }, [])

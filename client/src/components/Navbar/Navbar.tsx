@@ -16,7 +16,7 @@ const Navbar = () => {
 
     const handleSignOut: React.MouseEventHandler<HTMLButtonElement> = () => {
         axios.post('http://localhost:3000/signout')
-        .then(function (response: AxiosResponse<any, any>) {
+        .then(function (response: AxiosResponse) {
             setIsLoggedIn(!response.data.loggedOut)
             navigate(`/signin`) 
           })
