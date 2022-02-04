@@ -4,7 +4,7 @@ import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 import axios, { AxiosError, AxiosResponse } from 'axios'
 
-const SigninForm = () => {
+const SigninForm = (): JSX.Element => {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [webMessage, setWebMessage] = useState<string>("")
@@ -12,23 +12,23 @@ const SigninForm = () => {
 
     axios.defaults.withCredentials = true
 
-    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setUsername(event.target.value)
     }
 
-    const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(event.target.value)
     }
 
-    const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = () =>{
+    const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
         axios.post('http://localhost:3000/signin', {
             username: username,
             password: password
           })
-          .then(function (response: AxiosResponse) {
+          .then(function (response: AxiosResponse): void {
             navigate(`/blog/${response.data.username}`)
           })
-          .catch(function (error: AxiosError) {
+          .catch(function (error: AxiosError): void {
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else {
@@ -37,16 +37,16 @@ const SigninForm = () => {
           });
     }
 
-    const handleCreateAccountClick = () =>{
+    const handleCreateAccountClick:React.MouseEventHandler<HTMLButtonElement> = (): void =>{
         navigate(`/signup`)
     }
 
-    useEffect(()=>{
+    useEffect((): void =>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response) {
+        .then(function (response): void {
             navigate(`/blog/${response.data.username}`) 
           })
-          .catch(function () {
+          .catch(function (): void {
             // No need to handle error
           });
     }, [])

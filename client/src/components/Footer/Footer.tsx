@@ -4,7 +4,7 @@ import linkedInLogo from "./logo-images/linkedin_black_logo.png"
 import emailLogo from "./logo-images/email-logo.png"
 
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
     return (
         <div id="footer">
             <a href="https://github.com/James-T-Ardian/Blogged-Website" target="_blank">

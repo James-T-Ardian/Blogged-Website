@@ -1,91 +1,90 @@
-import React, {useState, useEffect} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
+import {useState, useEffect} from 'react';
+import {useParams, useNavigate, NavigateFunction} from 'react-router-dom'
 import './SinglePost.css'
 
-const axios = require("axios")
+import axios, {AxiosResponse, AxiosError} from 'axios'
 
-const SinglePost = () => {
-    const {username, postId, purpose} = useParams()
-    const [title, setTitle] = useState("")
-    const [body, setBody] = useState("")
-    const [isOwner, setIsOwner] = useState(false)
+const SinglePost = (): JSX.Element => {
+    const {username, postId, purpose}: {[key: string]: string | undefined} = useParams()
+    const [title, setTitle] = useState<string>("")
+    const [body, setBody] = useState<string>("")
 
-    const navigate = useNavigate()
-    const todayDate = new Date().toISOString().slice(0, 10);
+    const navigate: NavigateFunction = useNavigate()
+    const todayDate: string = new Date().toISOString().slice(0, 10);
 
     axios.defaults.withCredentials = true
 
 
-    const loadPostContents = () =>{
+    const loadPostContents = (): void =>{
         axios.get(`http://localhost:3000/blog/${username}/${postId}`)
-        .then(function (response){
+        .then(function (response: AxiosResponse): void {
             setTitle(response.data.post[0].title)
             setBody(response.data.post[0].body)
-            setIsOwner(response.data.isOwner)
         })
-        .catch(function (error){
-            if(error.response.status == "500"){
+        .catch(function (error: AxiosError): void {
+            if(error?.response?.status.toString() ?? "500" == "500"){
                 navigate("/500")
-            } else if (error.response.status == "404"){
+            } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
             }
         })
     }
 
-    const handleBackButtonClick = ()=>{
+    const handleBackButtonClick: React.MouseEventHandler<HTMLButtonElement> = (): void=>{
         navigate(`/blog/${username}`)
     }
 
-    const handleSubmitEditButton = ()=>{
+    const handleSubmitEditButton: React.MouseEventHandler<HTMLButtonElement> = (): void=>{
         axios.put(`http://localhost:3000/blog/${username}/${postId}`, {
             title: title,
             body: body
         })
-        .then(function (response){
+        .then(function () : void {
             navigate(`/blog/${username}`)
         })
-        .catch(function(error){
-            if(error.response.status == "500"){
+        .catch(function (error: AxiosError) : void {
+            if(error?.response?.status.toString() ?? "500" == "500"){
                 navigate("/500")
-            } else if(error.response.status == "401"){
+            } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")
             }
         })
     }
 
-    const handleCreatePostButton = ()=>{
+    const handleCreatePostButton: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
         axios.post(`http://localhost:3000/blog/${username}`, {
             title: title,
             body: body,
             created_at: todayDate
         })
-        .then((response)=>{
+        .then(function (): void {
             navigate(`/blog/${username}`)
         })
-        .catch((error)=>{
-            if(error.response.status == "500"){
+        .catch(function (error: AxiosError): void {
+            if(error?.response?.status.toString() ?? "500" == "500"){
                 navigate("/500")
-            } else if(error.response.status == "401"){
+            } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")
             }
         })
     }
     
-    const handleTitleChange = (event)=>{
+    const handleTitleChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void =>{
         setTitle(event.target.value)
     }
 
-    const handleBodyChange = (event)=>{
+    const handleBodyChange: React.ChangeEventHandler<HTMLTextAreaElement> = (event: React.ChangeEvent<HTMLTextAreaElement>): void =>{
         setBody(event.target.value)
     }
-    useEffect( ()=>{
+
+    useEffect((): void =>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response) {
+        .then(function (): void {
             if(purpose == "see" || purpose == "edit"){
                 loadPostContents()
             } 
         })
-        .catch(function (error) {
+        .catch(function (): void {
             navigate('/signin')
         });
     }, [])

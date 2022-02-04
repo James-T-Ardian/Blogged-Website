@@ -4,7 +4,7 @@ import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 import axios, { AxiosError, AxiosResponse } from 'axios'
 
-const SignupForm = () => {
+const SignupForm = (): JSX.Element => {
     const [username, setUsername] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [passwordCheck, setPasswordCheck] = useState<string>("")
@@ -13,19 +13,19 @@ const SignupForm = () => {
 
     axios.defaults.withCredentials = true
 
-    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handleUsernameChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setUsername(event.target.value)
     }
 
-    const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void => {
         setPassword(event.target.value)
     }
 
-    const handlePasswordCheckChange: React.ChangeEventHandler<HTMLInputElement> = (event)=>{
+    const handlePasswordCheckChange: React.ChangeEventHandler<HTMLInputElement> = (event: React.ChangeEvent<HTMLInputElement>): void =>{
         setPasswordCheck(event.target.value)
     }
 
-    const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = () => {
+    const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = (): void => {
         if(password !== passwordCheck){
             setWebMessage("Passwords do not match")
         } else {
@@ -33,10 +33,10 @@ const SignupForm = () => {
                 username: username,
                 password: password
             })
-            .then(function () {
+            .then(function (): void {
                 navigate("/signin")
             })
-            .catch(function (error: AxiosError) {
+            .catch(function (error: AxiosError): void {
                 if(error?.response?.status.toString() == "500"){
                     navigate("/500")
                 } else {
@@ -47,16 +47,16 @@ const SignupForm = () => {
         
     }
 
-    const handleSignInClick: React.MouseEventHandler<HTMLButtonElement> = () =>{
+    const handleSignInClick: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
         navigate('/signin')
     }
 
-    useEffect(()=>{
+    useEffect((): void =>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response: AxiosResponse) {
+        .then(function (response: AxiosResponse): void {
             navigate(`/blog/${response.data.username}`)
         })
-        .catch(function () {
+        .catch(function (): void {
             // No need to handle error
         });
     }, [])

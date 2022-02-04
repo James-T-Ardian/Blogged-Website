@@ -5,7 +5,7 @@ import { useNavigate, Link, NavigateFunction } from 'react-router-dom'
 
 import axios, {AxiosError, AxiosResponse} from 'axios'
 
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
     const [username, setUsername] = useState<string>("")
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
     const [userSearch, setUserSearch] = useState<string>("")
@@ -14,32 +14,32 @@ const Navbar = () => {
 
     axios.defaults.withCredentials = true
 
-    const handleSignOut: React.MouseEventHandler<HTMLButtonElement> = () => {
+    const handleSignOut: React.MouseEventHandler<HTMLButtonElement> = (): void => {
         axios.post('http://localhost:3000/signout')
-        .then(function (response: AxiosResponse) {
+        .then(function (response: AxiosResponse): void {
             setIsLoggedIn(!response.data.loggedOut)
             navigate(`/signin`) 
           })
-          .catch(function () {
+          .catch(function (): void {
               // No need to handle any errors
           });
     }
 
-    const handleUserSearchChange: React.ChangeEventHandler<HTMLInputElement>  = (event: React.ChangeEvent<HTMLInputElement>)=>{
+    const handleUserSearchChange: React.ChangeEventHandler<HTMLInputElement>  = (event: React.ChangeEvent<HTMLInputElement>): void =>{
         setUserSearch(event.target.value)
     }
 
-    const handleUserSearchClick: React.MouseEventHandler<HTMLButtonElement>= ()=>{
+    const handleUserSearchClick: React.MouseEventHandler<HTMLButtonElement>= (): void =>{
         navigate(`/blog/${userSearch}`)
     }
 
-    useEffect(()=>{
+    useEffect(() : void =>{
         axios.get('http://localhost:3000/signin')
-        .then(function (response: AxiosResponse) {
+        .then(function (response: AxiosResponse): void {
             setUsername(response.data.username)
             setIsLoggedIn(response.data.loggedIn)
         })
-        .catch(function (error: AxiosError) {
+        .catch(function (error: AxiosError): void {
             setUsername(error?.response?.data.username ?? "")
             setIsLoggedIn(error?.response?.data.loggedIn ?? false)
 
