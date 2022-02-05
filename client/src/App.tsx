@@ -1,4 +1,3 @@
-import React from 'react'
 import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom'
 import SigninForm from './components/SigninForm/SigninForm'
 import Navbar from './components/Navbar/Navbar'

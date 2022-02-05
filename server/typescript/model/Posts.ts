@@ -35,9 +35,9 @@ class Posts implements PostsModel{
     // Param: postID -> postID of the post you want to search
     //
     // Returns promise of mysql query result from search of post by id made by user with username = this.username
-    getUserPostByPostID = async (postID: string): Promise<MySQLQueryResult>=>{
+    getUserPostByPostID = async (post_id: string): Promise<MySQLQueryResult>=>{
         const sql: string = 'SELECT title, body, created_at FROM posts WHERE post_id = ? && uploader = ?'
-        const [result, _]: [MySQLQueryResult, FieldPacket[]] = await mysql.execute(sql, [postID, this.username])
+        const [result, _]: [MySQLQueryResult, FieldPacket[]] = await mysql.execute(sql, [post_id, this.username])
         return result
     }
 
@@ -57,18 +57,18 @@ class Posts implements PostsModel{
     // Param: body -> new text body
     //
     // Returns promise of mysql query result from updating post for user with username = this.username
-    updateUserPost = async(postID: string, title: string, body: string): Promise<MySQLQueryResult>=>{
+    updateUserPost = async(post_id: string, title: string, body: string): Promise<MySQLQueryResult>=>{
         const sql: string = 'UPDATE posts SET title = ?, body = ? WHERE post_id  = ?'
-        const [result, _]: [MySQLQueryResult, FieldPacket[]]  = await mysql.execute(sql, [title, body, postID])
+        const [result, _]: [MySQLQueryResult, FieldPacket[]]  = await mysql.execute(sql, [title, body, post_id])
         return result
     }
     
     // Param: postID -> postID of the post you want to delete
     //
     // Returns promise of mysql query result from deleting post by id for user with username = this.username
-    deleteUserPost = async(postID: string): Promise<MySQLQueryResult>=>{
+    deleteUserPost = async(post_id: string): Promise<MySQLQueryResult>=>{
         const sql: string = 'DELETE FROM posts WHERE post_id  = ?'
-        const [result, _]: [MySQLQueryResult, FieldPacket[]]  = await mysql.execute(sql, [postID])
+        const [result, _]: [MySQLQueryResult, FieldPacket[]]  = await mysql.execute(sql, [post_id])
         return result
     }
 
