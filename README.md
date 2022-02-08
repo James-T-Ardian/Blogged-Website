@@ -7,4 +7,4 @@ Server Code is written using NodeJS, ExpressJS and MySQL (deployment code for se
 Deployed Website: https://blogged-website.netlify.app/# <br />
 
 
-Note: Development and deployment code was migrated to typescript after initial deployment
+Note: development and deployment code was migrated to typescript after initial deployment
