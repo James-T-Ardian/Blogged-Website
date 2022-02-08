@@ -5,7 +5,7 @@ import './SinglePost.css'
 import axios, {AxiosResponse, AxiosError} from 'axios'
 
 const SinglePost = (): JSX.Element => {
-    const {username, postId, purpose}: {[key: string]: string | undefined} = useParams()
+    const {username, post_id, purpose}: {[key: string]: string | undefined} = useParams()
     const [title, setTitle] = useState<string>("")
     const [body, setBody] = useState<string>("")
 
@@ -16,13 +16,13 @@ const SinglePost = (): JSX.Element => {
 
 
     const loadPostContents = (): void =>{
-        axios.get(`http://localhost:3000/blog/${username}/${postId}`)
+        axios.get(`http://localhost:3000/blog/${username}/${post_id}`)
         .then(function (response: AxiosResponse): void {
             setTitle(response.data.post[0].title)
             setBody(response.data.post[0].body)
         })
         .catch(function (error: AxiosError): void {
-            if(error?.response?.status.toString() ?? "500" == "500"){
+            if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
@@ -35,7 +35,7 @@ const SinglePost = (): JSX.Element => {
     }
 
     const handleSubmitEditButton: React.MouseEventHandler<HTMLButtonElement> = (): void=>{
-        axios.put(`http://localhost:3000/blog/${username}/${postId}`, {
+        axios.put(`http://localhost:3000/blog/${username}/${post_id}`, {
             title: title,
             body: body
         })
@@ -43,7 +43,7 @@ const SinglePost = (): JSX.Element => {
             navigate(`/blog/${username}`)
         })
         .catch(function (error: AxiosError) : void {
-            if(error?.response?.status.toString() ?? "500" == "500"){
+            if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")
@@ -61,7 +61,7 @@ const SinglePost = (): JSX.Element => {
             navigate(`/blog/${username}`)
         })
         .catch(function (error: AxiosError): void {
-            if(error?.response?.status.toString() ?? "500" == "500"){
+            if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")

@@ -21,7 +21,7 @@ function App() {
         <Route path = "/blog/:username" element={<UserBlog/>}></Route>
 
         {/* For seeing and editing posts */}
-        <Route path = "/blog/:username/:postId/:purpose" element={<SinglePost/>}></Route>
+        <Route path = "/blog/:username/:post_id/:purpose" element={<SinglePost/>}></Route>
         {/* For creating posts */}
         <Route path = "/blog/:username/:purpose" element={<SinglePost/>}></Route>
 
