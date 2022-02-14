@@ -9,7 +9,7 @@ const logOutUser:RequestHandler = (req:Request, res:Response): Response<any, Rec
         req.session.destroy((err:any)=>{
             // No need to handle
         });
-        res.clearCookie("username")
+        res.clearCookie("connect.sid")
     
         return res.status(200).json({loggedOut: true, msg: "User has been logged out"})
     } else {
