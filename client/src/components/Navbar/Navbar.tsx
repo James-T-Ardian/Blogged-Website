@@ -15,14 +15,8 @@ const Navbar = (): JSX.Element => {
     axios.defaults.withCredentials = true
 
     const handleSignOut: React.MouseEventHandler<HTMLButtonElement> = (): void => {
-        axios.post('http://localhost:3000/signout')
-        .then(function (response: AxiosResponse): void {
-            setIsLoggedIn(!response.data.loggedOut)
-            navigate(`/signin`) 
-          })
-          .catch(function (): void {
-              // No need to handle any errors
-          });
+        localStorage.clear();
+        navigate(`/signin`)
     }
 
     const handleUserSearchChange: React.ChangeEventHandler<HTMLInputElement>  = (event: React.ChangeEvent<HTMLInputElement>): void =>{
@@ -34,16 +28,14 @@ const Navbar = (): JSX.Element => {
     }
 
     useEffect(() : void =>{
-        axios.get('http://localhost:3000/signin')
+        axios.get('http://localhost:8080/api/v1/auth/authenticate')
         .then(function (response: AxiosResponse): void {
             setUsername(response.data.username)
-            setIsLoggedIn(response.data.loggedIn)
+            setIsLoggedIn(true)
         })
         .catch(function (error: AxiosError): void {
-            setUsername(error?.response?.data.username ?? "")
-            setIsLoggedIn(error?.response?.data.loggedIn ?? false)
-
-            
+            setUsername("")
+            setIsLoggedIn(false)
         });
 
 

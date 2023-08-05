@@ -21,11 +21,12 @@ const SigninForm = (): JSX.Element => {
     }
 
     const handleEnterClick: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
-        axios.post('http://localhost:3000/signin', {
+        axios.post('http://localhost:8080/api/v1/auth/authenticate', {
             username: username,
             password: password
           })
           .then(function (response: AxiosResponse): void {
+            localStorage.setItem('jwt', response.data.token)
             navigate(`/blog/${response.data.username}`)
           })
           .catch(function (error: AxiosError): void {
@@ -42,7 +43,7 @@ const SigninForm = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        axios.get('http://localhost:3000/signin')
+        axios.get('http://localhost:8080/api/v1/auth/authenticate')
         .then(function (response): void {
             navigate(`/blog/${response.data.username}`) 
           })

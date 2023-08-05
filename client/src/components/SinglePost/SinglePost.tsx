@@ -8,6 +8,7 @@ const SinglePost = (): JSX.Element => {
     const {username, post_id, purpose}: {[key: string]: string | undefined} = useParams()
     const [title, setTitle] = useState<string>("")
     const [body, setBody] = useState<string>("")
+    const token:string = localStorage.getItem('jwt') ?? ''
 
     const navigate: NavigateFunction = useNavigate()
     const todayDate: string = new Date().toISOString().slice(0, 10);
@@ -16,16 +17,22 @@ const SinglePost = (): JSX.Element => {
 
 
     const loadPostContents = (): void =>{
-        axios.get(`http://localhost:3000/blog/${username}/${post_id}`)
+        axios.get(`http://localhost:8080/api/v1/posts/${post_id}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
         .then(function (response: AxiosResponse): void {
-            setTitle(response.data.post[0].title)
-            setBody(response.data.post[0].body)
+            setTitle(response.data.posts[0].title)
+            setBody(response.data.posts[0].body)
         })
         .catch(function (error: AxiosError): void {
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
+            } else if(error?.response?.status.toString() == "403"){
+                navigate("/signin")
             }
         })
     }
@@ -35,9 +42,13 @@ const SinglePost = (): JSX.Element => {
     }
 
     const handleSubmitEditButton: React.MouseEventHandler<HTMLButtonElement> = (): void=>{
-        axios.put(`http://localhost:3000/blog/${username}/${post_id}`, {
+        axios.put(`http://localhost:8080/api/v1/posts/${post_id}`, {
             title: title,
             body: body
+        }, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(function () : void {
             navigate(`/blog/${username}`)
@@ -47,24 +58,36 @@ const SinglePost = (): JSX.Element => {
                 navigate("/500")
             } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")
+            } else if(error?.response?.status.toString() == "403"){
+                navigate("/signin")
             }
         })
     }
 
     const handleCreatePostButton: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
-        axios.post(`http://localhost:3000/blog/${username}`, {
+        console.log(todayDate)
+        console.log(title)
+        console.log(body)
+        axios.post(`http://localhost:8080/api/v1/posts/`, {
             title: title,
             body: body,
             created_at: todayDate
+        }, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(function (): void {
             navigate(`/blog/${username}`)
         })
         .catch(function (error: AxiosError): void {
+            console.log(error)
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if(error?.response?.status.toString() == "401"){
                 navigate("/401")
+            } else if(error?.response?.status.toString() == "403"){
+                navigate("/signin")
             }
         })
     }
@@ -78,15 +101,9 @@ const SinglePost = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        axios.get('http://localhost:3000/signin')
-        .then(function (): void {
-            if(purpose == "see" || purpose == "edit"){
-                loadPostContents()
-            } 
-        })
-        .catch(function (): void {
-            navigate('/signin')
-        });
+        if(purpose == "see" || purpose == "edit"){
+            loadPostContents()
+        } 
     }, [])
 
 

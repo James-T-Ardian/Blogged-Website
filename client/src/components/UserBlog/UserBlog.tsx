@@ -16,22 +16,29 @@ const UserBlog = (): JSX.Element => {
     const navigate: NavigateFunction = useNavigate()
     const [posts, setPosts] = useState<Post[]>([])
     const [isOwner, setIsOwner] = useState<boolean>(false)
+    const token:string = localStorage.getItem('jwt') ?? ''
 
     const url: string|undefined = window.location.pathname.split('/').pop();
 
     axios.defaults.withCredentials = true
     
     const loadPosts = (): void =>{
-        axios.get(`http://localhost:3000/blog/${username}`)
+        axios.get(`http://localhost:8080/api/v1/posts/?username=${username}`, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
         .then(function(response: AxiosResponse) {
             setPosts(response.data.posts)
-            setIsOwner(response.data.isOwner)
+            setIsOwner(response.data.owner)
         })
         .catch(function(error: AxiosError) {
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
             } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
+            } else if (error?.response?.status.toString() == "403"){
+                navigate("/signin")
             }
         })
     }
@@ -44,13 +51,21 @@ const UserBlog = (): JSX.Element => {
 
     const handleDeleteClick = (post_id: string): React.MouseEventHandler<HTMLButtonElement> =>{
         return function () {
-            axios.delete(`http://localhost:3000/blog/${username}/${post_id}`)
+            axios.delete(`http://localhost:8080/api/v1/posts/${post_id}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
             .then(function (){
                 loadPosts()
             })
-            .catch(function (){
-                navigate("/500")
-
+            .catch(function (error:AxiosError){
+                if(error?.response?.status.toString() == "500"){
+                    navigate("/500")
+                } else if (error?.response?.status.toString() == "403"){
+                    navigate("/signin")
+                }
             })
         }
     }
@@ -60,13 +75,7 @@ const UserBlog = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        axios.get('http://localhost:3000/signin')
-        .then(function () {
-            loadPosts()
-        })
-        .catch(function () {
-            navigate(`/signin`) 
-        });
+        loadPosts()
     }, [url])
 
     return (

@@ -29,7 +29,7 @@ const SignupForm = (): JSX.Element => {
         if(password !== passwordCheck){
             setWebMessage("Passwords do not match")
         } else {
-            axios.post('http://localhost:3000/signup', {
+            axios.post('http://localhost:8080/api/v1/auth/register', {
                 username: username,
                 password: password
             })
@@ -37,6 +37,7 @@ const SignupForm = (): JSX.Element => {
                 navigate("/signin")
             })
             .catch(function (error: AxiosError): void {
+                console.log(error)
                 if(error?.response?.status.toString() == "500"){
                     navigate("/500")
                 } else {
@@ -52,7 +53,7 @@ const SignupForm = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        axios.get('http://localhost:3000/signin')
+        axios.get('http://localhost:8080/api/v1/auth/authenticate')
         .then(function (response: AxiosResponse): void {
             navigate(`/blog/${response.data.username}`)
         })
