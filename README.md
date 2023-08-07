@@ -1,4 +1,4 @@
-Blogged-Website is a social media website written in Typescript using ReactJS framework (found in client folder) and Java using Spring Boot (found in server-java folder). 
+Blogged-Website is a SQL-driven social media website written in Typescript using ReactJS framework (found in client folder) and Java using Spring Boot (found in server-java folder). The SQL script to create the database that will work with the Java server is in the sql-script.sql file. 
 
 The backend was initially a Node ExpressJS server (found in server folder) utilizing server-side sessions as authentication, but it was later rewritten as a Java Spring Boot server with JWT authentication. The frontend code in the client folder now only works with the new Java server.
 
@@ -8,4 +8,3 @@ Versions:
   - Spring Boot 3.1.2
 
 The website is deployed online using Netlify and Heroku. It can be accessed using this link: https://blogged-website.netlify.app/#/signin
-
