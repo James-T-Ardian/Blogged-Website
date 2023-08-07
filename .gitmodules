@@ -1,0 +1,6 @@
+[submodule "Blogged-Server-Java"]
+	path = Blogged-Server-Java
+	url = https://github.com/James-T-Ardian/Blogged-Server-Java.git
+[submodule "server-java"]
+	path = server-java
+	url = https://github.com/James-T-Ardian/Blogged-Server-Java.git
