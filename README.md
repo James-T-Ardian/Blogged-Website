@@ -1,6 +1,6 @@
 Blogged-Website is a social media website written in Typescript using ReactJS framework (found in client folder) and Java using Spring Boot (found in server-java folder). 
 
-The backend was initially a Node ExpressJS server (found in server folder) utilizing server-side sessions as authentication, but it was later as a Java Spring Boot server with JWT authentication. The frontend code in the client folder now only works with the new Java server.
+The backend was initially a Node ExpressJS server (found in server folder) utilizing server-side sessions as authentication, but it was later rewritten as a Java Spring Boot server with JWT authentication. The frontend code in the client folder now only works with the new Java server.
 
 Versions:
   - Node 14.21.3
