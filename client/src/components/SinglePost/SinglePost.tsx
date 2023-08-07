@@ -32,6 +32,7 @@ const SinglePost = (): JSX.Element => {
             } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
             } else if(error?.response?.status.toString() == "403"){
+                localStorage.clear();
                 navigate("/signin")
             }
         })
@@ -56,18 +57,14 @@ const SinglePost = (): JSX.Element => {
         .catch(function (error: AxiosError) : void {
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
-            } else if(error?.response?.status.toString() == "401"){
-                navigate("/401")
             } else if(error?.response?.status.toString() == "403"){
+                localStorage.clear();
                 navigate("/signin")
             }
         })
     }
 
     const handleCreatePostButton: React.MouseEventHandler<HTMLButtonElement> = (): void =>{
-        console.log(todayDate)
-        console.log(title)
-        console.log(body)
         axios.post(`http://localhost:8080/api/v1/posts/`, {
             title: title,
             body: body,
@@ -81,12 +78,10 @@ const SinglePost = (): JSX.Element => {
             navigate(`/blog/${username}`)
         })
         .catch(function (error: AxiosError): void {
-            console.log(error)
             if(error?.response?.status.toString() == "500"){
                 navigate("/500")
-            } else if(error?.response?.status.toString() == "401"){
-                navigate("/401")
             } else if(error?.response?.status.toString() == "403"){
+                localStorage.clear();
                 navigate("/signin")
             }
         })
@@ -102,7 +97,11 @@ const SinglePost = (): JSX.Element => {
 
     useEffect((): void =>{
         if(purpose == "see" || purpose == "edit"){
-            loadPostContents()
+            if(token) {
+                loadPostContents()
+            } else {
+                navigate("/signin")
+            }
         } 
     }, [])
 

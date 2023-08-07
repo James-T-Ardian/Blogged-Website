@@ -38,6 +38,7 @@ const UserBlog = (): JSX.Element => {
             } else if (error?.response?.status.toString() == "404"){
                 navigate("/404")
             } else if (error?.response?.status.toString() == "403"){
+                localStorage.clear();
                 navigate("/signin")
             }
         })
@@ -64,6 +65,7 @@ const UserBlog = (): JSX.Element => {
                 if(error?.response?.status.toString() == "500"){
                     navigate("/500")
                 } else if (error?.response?.status.toString() == "403"){
+                    localStorage.clear();
                     navigate("/signin")
                 }
             })
@@ -75,7 +77,12 @@ const UserBlog = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        loadPosts()
+        if(token) {
+            loadPosts()
+        } else {
+            navigate("/signin")
+        }
+        
     }, [url])
 
     return (

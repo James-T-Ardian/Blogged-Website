@@ -37,11 +37,8 @@ const SignupForm = (): JSX.Element => {
                 navigate("/signin")
             })
             .catch(function (error: AxiosError): void {
-                console.log(error)
-                if(error?.response?.status.toString() == "500"){
-                    navigate("/500")
-                } else {
-                    setWebMessage(error?.response?.data.msg ?? "Server Error")
+                if(error?.response?.status.toString() == "409"){
+                    setWebMessage("User Already Exists")
                 }
             });
         }
@@ -53,13 +50,9 @@ const SignupForm = (): JSX.Element => {
     }
 
     useEffect((): void =>{
-        axios.get('http://localhost:8080/api/v1/auth/authenticate')
-        .then(function (response: AxiosResponse): void {
-            navigate(`/blog/${response.data.username}`)
-        })
-        .catch(function (): void {
-            // No need to handle error
-        });
+        if (localStorage.getItem('jwt') ) {
+            navigate(`/blog/${localStorage.getItem("username")}`)
+        }
     }, [])
 
     return (
