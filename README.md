@@ -3,7 +3,8 @@ Blogged-Website is a SQL-driven social media website which has a frontend writte
 The backend was initially a Node ExpressJS server (found in server folder) utilizing server-side sessions as authentication, but it was later rewritten as a Java Spring Boot server with JWT authentication. The frontend code in the client folder has also been updated such that it will now only run with the new Java server.
 
 Versions:
-  - Node 14.21.3
+  - Node 14.x
+  - Npm 8.x
   - Java 17
   - Spring Boot 3.1.2
 
